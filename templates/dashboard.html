@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker | Pawan Yadav</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #f1f5f9;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 25px 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            margin-bottom: 0;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            padding: 11px 18px;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat {
+            display: block;
+            background: #151e30;
+            border: 1px solid #263247;
+            border-radius: 14px;
+            padding: 22px;
+            color: inherit;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        a.stat:hover {
+            transform: translateY(-4px);
+            border-color: #818cf8;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 25px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .click-note {
+            color: #a5b4fc;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .panel {
+            background: #151e30;
+            border: 1px solid #263247;
+            border-radius: 14px;
+            padding: 23px;
+            min-width: 0;
+        }
+
+        .panel h2 {
+            font-size: 20px;
+            margin: 0 0 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #0b1120;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            background: #6366f1;
+            color: white;
+            border: 0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #4f46e5;
+        }
+
+        .message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #1e293b;
+        }
+
+        .success {
+            color: #86efac;
+        }
+
+        .error {
+            color: #fca5a5;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .history-header h2 {
+            margin: 0;
+        }
+
+        .report-tag {
+            color: #a5b4fc;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #a5b4fc;
+            text-decoration: none;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 520px;
+        }
+
+        th, td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #263247;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            color: #94a3b8;
+            font-weight: normal;
+        }
+
+        .amount {
+            color: #fca5a5;
+            font-weight: bold;
+        }
+
+        .category {
+            display: inline-block;
+            background: #263247;
+            color: #c7d2fe;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #94a3b8;
+            padding: 30px 10px;
+        }
+
+        .footer {
+            margin-top: 35px;
+            padding: 25px 15px;
+            text-align: center;
+            border-top: 1px solid #263247;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .footer-name {
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            margin: 17px 0;
+        }
+
+        .social-links a {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #1e293b;
+            color: white;
+            transition: 0.25s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: #6366f1;
+        }
+
+        .social-links svg {
+            width: 23px;
+            height: 23px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 800px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .panel {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <header class="header">
+        <div>
+            <h1>💰 Expense Tracker</h1>
+            <p>Welcome, {{ request.user.username }}!</p>
+        </div>
+
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="logout-btn" type="submit">Logout ↗</button>
+        </form>
+    </header>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-label">💳 Total Expenses</div>
+            <div class="stat-value">₹{{ total|floatformat:2 }}</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">📅 Today's Spending</div>
+            <div class="stat-value">₹{{ today_total|floatformat:2 }}</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">🧾 Transactions Shown</div>
+            <div class="stat-value">{{ expenses|length }}</div>
+        </div>
+
+        <a href="?period=week#expense-history" class="stat">
+            <div class="stat-label">📊 This Week</div>
+            <div class="stat-value">₹{{ weekly_total|floatformat:2 }}</div>
+            <div class="click-note">Click to view weekly report →</div>
+        </a>
+
+        <a href="?period=month#expense-history" class="stat">
+            <div class="stat-label">🗓️ This Month</div>
+            <div class="stat-value">₹{{ monthly_total|floatformat:2 }}</div>
+            <div class="click-note">Click to view monthly report →</div>
+        </a>
+    </section>
+
+    <div class="content-grid">
+
+        <section class="panel">
+            <h2>➕ Add New Expense</h2>
+
+            <form method="post" action="{% url 'dashboard' %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="title">Expense Name</label>
+                    <input type="text" id="title" name="title"
+                           placeholder="e.g. Lunch, Travel" maxlength="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Amount (₹)</label>
+                    <input type="number" id="amount" name="amount"
+                           placeholder="e.g. 250" min="0.01" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select category</option>
+                        <option value="Food">🍔 Food</option>
+                        <option value="Travel">🚗 Travel</option>
+                        <option value="Shopping">🛍️ Shopping</option>
+                        <option value="Bills">🧾 Bills</option>
+                        <option value="Education">📚 Education</option>
+                        <option value="Health">💊 Health</option>
+                        <option value="Entertainment">🎮 Entertainment</option>
+                        <option value="Other">📦 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date (DD-MM-YYYY)</label>
+                    <input type="text" id="date" name="date"
+                           placeholder="27-10-2026" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+                           title="Enter date as DD-MM-YYYY" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes (optional)</label>
+                    <textarea id="notes" name="notes" rows="3"
+                              placeholder="Add some details..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Save Expense ✓</button>
+            </form>
+        </section>
+
+        <section class="panel" id="expense-history">
+            <div class="history-header">
+                <h2>{{ history_title|default:"Recent expenses" }}</h2>
+                <span class="report-tag">{{ history_tag|default:"HISTORY" }}</span>
+            </div>
+
+            {% if period %}
+                <a class="back-link" href="{% url 'dashboard' %}">← Back to all expenses</a>
+            {% endif %}
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Expense</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for expense in expenses %}
+                        <tr>
+                            <td>
+                                <strong>{{ expense.title }}</strong>
+                                {% if expense.notes %}
+                                    <br><small style="color:#94a3b8">{{ expense.notes }}</small>
+                                {% endif %}
+                            </td>
+                            <td><span class="category">{{ expense.category }}</span></td>
+                            <td>{{ expense.date|date:"d M Y" }}</td>
+                            <td class="amount">₹{{ expense.amount|floatformat:2 }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4" class="empty">
+                                No expenses found for this period. Add your first expense!
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <p class="footer-name">Pawan Yadav</p>
+        <p>© 2026 Pawan Yadav. All Rights Reserved.</p>
+        <p>Connect with me</p>
+
+        <div class="social-links">
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/share/1ZGtFFms1J/"
+               target="_blank" rel="noopener noreferrer"
+               title="Facebook" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V3.9c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5V10H7v3h2.8v8z"/>
+                </svg>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/pawan_yadav050?vrfl=MXN1aW5qeGt2dmRvZA=="
+               target="_blank" rel="noopener noreferrer"
+               title="Instagram" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2.2A2.8 2.8 0 0 0 4.2 7v10A2.8 2.8 0 0 0 7 19.8h10a2.8 2.8 0 0 0 2.8-2.8V7A2.8 2.8 0 0 0 17 4.2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm5.2-3.8a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/>
+                </svg>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/pawanyadav050"
+               target="_blank" rel="noopener noreferrer"
+               title="LinkedIn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5.2 3a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4zM3.3 9h3.8v12H3.3zm6.2 0h3.6v1.6h.1a4 4 0 0 1 3.6-2c3.9 0 4.6 2.5 4.6 5.7V21h-3.8v-5.9c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V21H9.5z"/>
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+</div>
+</body>
+</html>

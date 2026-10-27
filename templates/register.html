@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | ExpenseTrack</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:Inter,sans-serif;color:#f4f7ff;background:radial-gradient(ellipse at 15% 15%,#182b50,transparent 40%),radial-gradient(ellipse at 90% 85%,#281746,transparent 40%),#080d1b;display:flex;flex-direction:column}
+nav{padding:24px 7%;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:11px;font-size:21px;font-weight:800}
+.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#4f8cff,#8b5cf6);font-size:24px}
+.gradient{background:linear-gradient(100deg,#77a8ff,#c59aff);color:transparent;background-clip:text}
+nav span:last-child{font-size:12px;color:#9ba8c7}
+main{flex:1;display:grid;place-items:center;padding:25px 16px 55px}
+.card{width:100%;max-width:470px;padding:36px;border:1px solid #ffffff1a;border-radius:25px;background:#11192ee8;box-shadow:0 25px 80px #0005}
+.icon{width:55px;height:55px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(135deg,#4f8cff,#8b5cf6);font-size:25px;margin-bottom:23px}
+h1{font-size:29px;letter-spacing:-1px;margin-bottom:10px}
+.subtitle{font-size:13px;line-height:1.8;color:#9ba8c7;margin-bottom:25px}
+.messages{margin-bottom:15px}
+.messages p{font-size:12px;color:#ffb4b4;padding:10px;background:#f871711a;border-radius:9px;margin-bottom:6px}
+form p{margin-bottom:17px}
+form label{display:block;font-size:12px;font-weight:600;margin-bottom:9px;color:#dce4fa}
+form input{width:100%;padding:14px;border-radius:11px;border:1px solid #ffffff1c;background:#080d1b;color:white;font-family:inherit;outline:none}
+form input:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px #8b5cf620}
+.helptext,form ul{display:block;color:#9ba8c7;font-size:11px;line-height:1.7;margin-top:7px}
+.errorlist{color:#ff9c9c!important;list-style:none}
+button{width:100%;padding:15px;border:0;border-radius:12px;color:white;font-weight:700;font-size:14px;background:linear-gradient(100deg,#4f8cff,#8758ed);cursor:pointer;margin-top:5px;transition:.2s}
+button:hover{transform:translateY(-2px);box-shadow:0 10px 25px #7664ff40}
+.bottom{text-align:center;color:#9ba8c7;font-size:12px;margin-top:23px}
+a{color:#b7a4ff;font-weight:700;text-decoration:none}
+a:hover{color:white}
+.secure{text-align:center;color:#7885a2;font-size:10px;margin-top:25px}
+footer{text-align:center;padding:20px;color:#687592;font-size:11px}
+@media(max-width:500px){.card{padding:27px 22px}h1{font-size:25px}nav{padding:18px 20px}nav span:last-child{display:none}}
+</style>
+</head>
+<body>
+<nav>
+    <div class="brand"><div class="logo">₹</div><span>Expense<span class="gradient">Track</span></span></div>
+    <span>Start managing money smarter</span>
+</nav>
+<main>
+<section class="card">
+    <div class="icon">✨</div>
+    <h1>Create your account</h1>
+    <p class="subtitle">Join ExpenseTrack and keep your daily expenses organised in one place.</p>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create My Account &nbsp; →</button>
+    </form>
+
+    <p class="bottom">Already have an account? <a href="{% url 'login' %}">Sign in →</a></p>
+    <p class="secure">🔐 Your personal account · Your expense history</p>
+</section>
+</main>
+<footer>© 2026 ExpenseTrack. Spend smarter, live better.</footer>
+</body>
+</html>

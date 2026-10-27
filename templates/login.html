@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Expense Tracker</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #080d1b;
+            --card: rgba(17, 25, 46, 0.88);
+            --text: #f4f7ff;
+            --muted: #9ba8c7;
+            --purple: #8b5cf6;
+            --blue: #4f8cff;
+            --green: #34d399;
+            --border: rgba(255, 255, 255, 0.09);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(79, 140, 255, 0.17), transparent 38%),
+                radial-gradient(ellipse at 85% 80%, rgba(139, 92, 246, 0.18), transparent 38%),
+                var(--bg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            width: 100%;
+            padding: 25px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.7px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            color: white;
+            font-size: 23px;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            box-shadow: 0 8px 25px rgba(107, 104, 255, 0.3);
+        }
+
+        .nav-text {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        main {
+            flex: 1;
+            display: grid;
+            place-items: center;
+            padding: 35px 20px 65px;
+        }
+
+        .login-layout {
+            width: 100%;
+            max-width: 1050px;
+            display: grid;
+            grid-template-columns: 1fr 430px;
+            align-items: center;
+            gap: 75px;
+        }
+
+        .intro {
+            padding: 15px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 14px;
+            margin-bottom: 27px;
+            color: #b9c8ff;
+            background: rgba(111, 130, 255, 0.10);
+            border: 1px solid rgba(140, 155, 255, 0.2);
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            height: 7px;
+            width: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 12px var(--green);
+        }
+
+        h1 {
+            font-size: clamp(38px, 5vw, 59px);
+            line-height: 1.12;
+            letter-spacing: -2.5px;
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(100deg, #77a8ff, #b99aff, #e0a7ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .intro-description {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.9;
+            max-width: 430px;
+        }
+
+        .feature-list {
+            margin-top: 35px;
+            display: grid;
+            gap: 17px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: #dce4fa;
+            font-size: 13px;
+        }
+
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 11px;
+            font-size: 17px;
+        }
+
+        .login-card {
+            padding: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 25px;
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 90px rgba(0, 0, 0, 0.35);
+        }
+
+        .card-icon {
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 17px;
+            font-size: 25px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #4f8cff, #8b5cf6);
+        }
+
+        .login-card h2 {
+            font-size: 27px;
+            letter-spacing: -1px;
+            margin-bottom: 9px;
+        }
+
+        .card-subtitle {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 27px;
+        }
+
+        .messages {
+            margin-bottom: 18px;
+        }
+
+        .message {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            background: rgba(248, 113, 113, 0.12);
+            border: 1px solid rgba(248, 113, 113, 0.25);
+            color: #ffb4b4;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .form-fields p {
+            margin-bottom: 19px;
+        }
+
+        .form-fields label {
+            display: block;
+            color: #dce4fa;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .form-fields input {
+            display: block;
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 12px;
+            outline: none;
+            color: white;
+            background: rgba(5, 10, 25, 0.65);
+            font-family: inherit;
+            font-size: 13px;
+            transition: 0.2s ease;
+        }
+
+        .form-fields input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+        }
+
+        .form-fields input::placeholder {
+            color: #65718e;
+        }
+
+        .form-fields ul,
+        .form-fields .helptext {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 7px;
+            line-height: 1.6;
+        }
+
+        .form-fields .errorlist {
+            color: #ff9c9c;
+            list-style: none;
+            font-size: 12px;
+            margin: 7px 0;
+        }
+
+        .forgot-note {
+            color: var(--muted);
+            font-size: 11px;
+            margin: -4px 0 22px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(100deg, #4f8cff, #8758ed);
+            box-shadow: 0 8px 24px rgba(105, 100, 255, 0.23);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(105, 100, 255, 0.35);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #687592;
+            font-size: 11px;
+            margin: 24px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .register-text {
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .register-text a {
+            color: #a99aff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .register-text a:hover {
+            color: white;
+        }
+
+        .security-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            color: #7f8ba8;
+            font-size: 10px;
+            margin-top: 24px;
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            color: #687592;
+            font-size: 11px;
+        }
+
+        @media (max-width: 850px) {
+            .login-layout {
+                max-width: 470px;
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .intro {
+                text-align: center;
+                padding: 0;
+            }
+
+            .intro-description {
+                margin: auto;
+            }
+
+            .feature-list {
+                display: none;
+            }
+
+            .eyebrow {
+                margin-bottom: 18px;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .login-card {
+                padding: 29px 24px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            nav {
+                padding: 20px;
+            }
+
+            .brand {
+                font-size: 18px;
+            }
+
+            .nav-text {
+                display: none;
+            }
+
+            main {
+                padding: 25px 16px 40px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .login-card h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="brand">
+            <div class="brand-icon">₹</div>
+            <span>Expense<span class="gradient-text">Track</span></span>
+        </div>
+        <div class="nav-text">Your money. Your control.</div>
+    </nav>
+
+    <main>
+        <div class="login-layout">
+
+            <section class="intro">
+                <div class="eyebrow">
+                    <span class="status-dot"></span>
+                    YOUR PERSONAL FINANCE SPACE
+                </div>
+
+                <h1>
+                    Take control of<br>
+                    your <span class="gradient-text">money.</span>
+                </h1>
+
+                <p class="intro-description">
+                    Track every rupee, understand your spending habits,
+                    and make smarter financial decisions — all in one place.
+                </p>
+
+                <div class="feature-list">
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <span>Daily, weekly and monthly expense reports</span>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <span>Keep your spending organised by category</span>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🔐</div>
+                        <span>Your personal account and expense history</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="login-card">
+                <div class="card-icon">👋</div>
+
+                <h2>Welcome back!</h2>
+                <p class="card-subtitle">
+                    Sign in to your account and see where your money goes.
+                </p>
+
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-fields">
+                        {{ form.as_p }}
+                    </div>
+
+                    <p class="forgot-note">
+                        🔒 Your account is personal to you.
+                    </p>
+
+                    <button type="submit" class="submit-btn">
+                        Sign In to Dashboard &nbsp; →
+                    </button>
+                </form>
+
+                <div class="divider">NEW HERE?</div>
+
+                <p class="register-text">
+                    Don't have an account?
+                    <a href="{% url 'register' %}">Create an account →</a>
+                </p>
+
+                <div class="security-note">
+                    <span>🔐</span>
+                    Secure sign-in · Personal expense tracking
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        © 2026 ExpenseTrack. Built to help you manage money smarter.
+    </footer>
+
+</body>
+</html>
